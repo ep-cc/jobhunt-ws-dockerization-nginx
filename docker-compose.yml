@@ -10,3 +10,8 @@ services:
   backend:
     build: ./backend
     container_name: app_backend
+  only-backend:
+    build: ./
+    container_name: app_only_backend
+    ports:
+      - '5001:4000'
