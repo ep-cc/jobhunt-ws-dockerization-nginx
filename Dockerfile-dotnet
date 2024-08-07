@@ -1,0 +1,20 @@
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS dotnet-build
+WORKDIR /src
+COPY ./backend-dotnet /src
+RUN dotnet restore "backend-dotnet.csproj"
+RUN dotnet publish "backend-dotnet.csproj" -c Release -o /app/publish
+
+FROM node:20 AS frontend-build
+WORKDIR /app
+COPY frontend/package*.json .
+RUN npm i
+COPY frontend/ .
+RUN npm run build
+
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /app
+RUN mkdir /app/wwwroot
+COPY --from=frontend-build /app/dist /app/wwwroot
+COPY --from=dotnet-build /app/publish .
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "backend-dotnet.dll"]
