@@ -15,3 +15,10 @@ services:
     container_name: app_only_backend
     ports:
       - '5001:4000'
+  dotnet-backend:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile-dotnet
+    container_name: app_dotnet_backend
+    ports:
+      - '5002:8080'
