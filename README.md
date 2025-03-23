@@ -54,3 +54,4 @@ The reason why this Dockerfile should be placed in the root folder is that it ne
 
 A second Dockerfile has to be added to the root folder, for example, `Dockerfile-dotnet`. In the compose file
 it can be specified, which Dockerfile should be used to build a specific service.
+
